@@ -1,6 +1,8 @@
 // ABOUTME: How It Works page explaining the selling process
 // ABOUTME: Step-by-step guide for homeowners
 
+"use client";
+
 import {
   HiClipboardDocumentList,
   HiHome,
@@ -8,6 +10,7 @@ import {
   HiEnvelope,
   HiCurrencyDollar,
 } from "react-icons/hi2";
+import { TierSelectTrigger } from "@/components/services/TierSelectTrigger";
 
 const steps = [
   {
@@ -113,12 +116,12 @@ export default function HowItWorks() {
           <p className="text-lg text-foreground mb-8 max-w-2xl mx-auto">
             Join hundreds of homeowners who have saved thousands by selling smarter.
           </p>
-          <a
-            href="https://app.access.realty/signup?source=how-it-works"
-            className="inline-block bg-secondary hover:bg-secondary-light text-secondary-foreground font-semibold px-8 py-4 rounded-lg transition-colors text-lg"
+          <TierSelectTrigger
+            className="inline-block bg-secondary hover:bg-secondary-light text-secondary-foreground font-semibold px-8 py-4 rounded-lg transition-colors text-lg cursor-pointer"
+            source="how-it-works"
           >
             Start Your Listing
-          </a>
+          </TierSelectTrigger>
         </div>
       </section>
     </div>
