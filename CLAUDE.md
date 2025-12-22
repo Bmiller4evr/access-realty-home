@@ -12,6 +12,15 @@ npm run lint     # ESLint
 
 **Note:** This repo uses port 4000 to avoid conflicts with other Access Realty repos.
 
+## Pre-Commit Checklist
+
+**ALWAYS run `npm run build` before committing/pushing.** This catches:
+- Missing imports and untracked files
+- TypeScript errors
+- Build-time failures that would break Vercel deployment
+
+Vercel auto-deploys on push to main - broken builds affect production immediately.
+
 ## Architecture
 
 This is the **marketing site** (Repo 2 of 3) for Access Realty:
