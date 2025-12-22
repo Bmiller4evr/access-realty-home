@@ -344,11 +344,7 @@ export default function Services() {
               <PlanSelectButton
                 key={tier.id}
                 planId={tier.id.replace(/_/g, "-")}
-                className={`text-center py-2 px-4 rounded-lg text-sm font-semibold transition-all ${
-                  tier.id === "full_service"
-                    ? "bg-primary text-primary-foreground hover:bg-primary-dark"
-                    : "bg-secondary text-secondary-foreground hover:opacity-90"
-                }`}
+                className="text-center py-2 px-4 rounded-lg text-sm font-semibold transition-all bg-primary text-primary-foreground hover:bg-primary-dark"
               >
                 Select <StyledTierName name={tier.name} />
               </PlanSelectButton>
@@ -440,11 +436,7 @@ export default function Services() {
                 <div className="p-4 pt-0">
                   <PlanSelectButton
                     planId={tier.id.replace(/_/g, "-")}
-                    className={`block w-full text-center py-3 px-6 rounded-lg font-semibold transition-all ${
-                      tier.id === "full_service"
-                        ? "bg-primary text-primary-foreground hover:bg-primary-dark"
-                        : "bg-secondary text-secondary-foreground hover:opacity-90"
-                    }`}
+                    className="block w-full text-center py-3 px-6 rounded-lg font-semibold transition-all bg-primary text-primary-foreground hover:bg-primary-dark"
                   >
                     Select <StyledTierName name={tier.name} />
                   </PlanSelectButton>
@@ -453,21 +445,6 @@ export default function Services() {
             ))}
           </div>
 
-          {/* Bottom CTA Section */}
-          <div className="text-center mt-8 p-6 bg-primary/5 rounded-lg">
-            <h2 className="text-lg font-bold text-primary mb-2">
-              Not sure which plan is right for you?
-            </h2>
-            <p className="text-sm text-muted-foreground mb-4 max-w-md mx-auto">
-              Schedule a free consultation with one of our listing specialists.
-            </p>
-            <a
-              href="https://app.access.realty/signup?source=services"
-              className="inline-block bg-primary text-primary-foreground px-6 py-2 rounded-lg text-sm font-semibold hover:bg-primary-dark transition-colors"
-            >
-              Get Started Free
-            </a>
-          </div>
         </div>
     </div>
   );
