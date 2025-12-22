@@ -283,12 +283,16 @@ export default function DirectListPage() {
                 <DirectListLogo />
               </h3>
               <div className="text-3xl font-bold text-primary mb-1">$2,995</div>
-              <p className="text-sm text-muted-foreground mb-6">Limited exposure</p>
+              <p className="text-sm text-muted-foreground mb-6">$495 upfront</p>
 
               <ul className="space-y-3 mb-6">
                 <li className="flex items-center gap-2 text-sm">
-                  <HiXMark className="h-4 w-4 text-red-500" />
-                  <span className="text-muted-foreground">MLS listing</span>
+                  <HiCheck className="h-4 w-4 text-green-600" />
+                  <span>MLS + Syndication</span>
+                </li>
+                <li className="flex items-center gap-2 text-sm">
+                  <HiCheck className="h-4 w-4 text-green-600" />
+                  <span>Professional Photography</span>
                 </li>
                 <li className="flex items-center gap-2 text-sm">
                   <HiCheck className="h-4 w-4 text-green-600" />
@@ -296,15 +300,11 @@ export default function DirectListPage() {
                 </li>
                 <li className="flex items-center gap-2 text-sm">
                   <HiCheck className="h-4 w-4 text-green-600" />
-                  <span>You control timeline</span>
+                  <span>Self-guided coordination</span>
                 </li>
                 <li className="flex items-center gap-2 text-sm">
                   <HiCheck className="h-4 w-4 text-green-600" />
-                  <span>Keep full equity</span>
-                </li>
-                <li className="flex items-center gap-2 text-sm">
-                  <HiXMark className="h-4 w-4 text-red-500" />
-                  <span className="text-muted-foreground">Professional marketing</span>
+                  <span>Pay-per-use add-ons</span>
                 </li>
               </ul>
             </div>
@@ -320,12 +320,12 @@ export default function DirectListPage() {
                 <DirectListLogo /> Plus
               </h3>
               <div className="text-3xl font-bold text-primary mb-1">$4,495</div>
-              <p className="text-sm text-muted-foreground mb-6">One-time flat fee</p>
+              <p className="text-sm text-muted-foreground mb-6">$995 upfront</p>
 
               <ul className="space-y-3 mb-6">
                 <li className="flex items-center gap-2 text-sm">
                   <HiCheck className="h-4 w-4 text-green-600" />
-                  <span>Full MLS listing</span>
+                  <span>MLS + Syndication</span>
                 </li>
                 <li className="flex items-center gap-2 text-sm">
                   <HiCheck className="h-4 w-4 text-green-600" />
@@ -333,11 +333,11 @@ export default function DirectListPage() {
                 </li>
                 <li className="flex items-center gap-2 text-sm">
                   <HiCheck className="h-4 w-4 text-green-600" />
-                  <span>You control pricing</span>
+                  <span>Premium marketing included</span>
                 </li>
                 <li className="flex items-center gap-2 text-sm">
                   <HiCheck className="h-4 w-4 text-green-600" />
-                  <span>You control timeline</span>
+                  <span>Premium analytics</span>
                 </li>
                 <li className="flex items-center gap-2 text-sm font-semibold">
                   <HiCheck className="h-4 w-4 text-green-600" />
@@ -353,34 +353,34 @@ export default function DirectListPage() {
               </a>
             </div>
 
-            {/* Traditional Listing */}
-            <div className="border-2 border-border rounded-xl p-6 bg-card">
+            {/* Traditional Realtor (comparison) */}
+            <div className="border-2 border-border rounded-xl p-6 bg-muted/50">
               <h3 className="text-xl font-bold text-foreground mb-1">
-                Traditional Listing
+                Traditional Realtor
               </h3>
-              <div className="text-3xl font-bold text-primary mb-1">3%</div>
-              <p className="text-sm text-muted-foreground mb-6">$12,000 on $400k home</p>
+              <div className="text-3xl font-bold text-muted-foreground mb-1">6%</div>
+              <p className="text-sm text-muted-foreground mb-6">~$24,000 on $400k home</p>
 
               <ul className="space-y-3 mb-6">
-                <li className="flex items-center gap-2 text-sm">
-                  <HiCheck className="h-4 w-4 text-green-600" />
+                <li className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <HiCheck className="h-4 w-4" />
                   <span>MLS listing</span>
                 </li>
-                <li className="flex items-center gap-2 text-sm">
-                  <HiCheck className="h-4 w-4 text-green-600" />
+                <li className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <HiCheck className="h-4 w-4" />
                   <span>Professional photos</span>
                 </li>
-                <li className="flex items-center gap-2 text-sm">
-                  <HiCheck className="h-4 w-4 text-green-600" />
-                  <span>You control pricing</span>
+                <li className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <HiCheck className="h-4 w-4" />
+                  <span>Agent representation</span>
                 </li>
-                <li className="flex items-center gap-2 text-sm">
-                  <HiCheck className="h-4 w-4 text-green-600" />
-                  <span>You control timeline</span>
+                <li className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <HiCheck className="h-4 w-4" />
+                  <span>Commission split</span>
                 </li>
-                <li className="flex items-center gap-2 text-sm">
-                  <HiCheck className="h-4 w-4 text-green-600" />
-                  <span>Keep full commission</span>
+                <li className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <HiXMark className="h-4 w-4 text-red-400" />
+                  <span>Keep full equity</span>
                 </li>
               </ul>
             </div>
