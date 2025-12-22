@@ -21,7 +21,7 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="py-16 bg-secondary">
+    <section className="py-16 bg-muted">
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap justify-center gap-8 md:gap-12">
           {testimonials.map((testimonial, index) => (
@@ -30,7 +30,7 @@ const Testimonials = () => {
               className="flex flex-col items-center gap-4 animate-fade-in"
               style={{ animationDelay: `${index * 0.2}s` }}
             >
-              <div className="h-24 w-24 rounded-full border-4 border-card shadow-lg bg-primary flex items-center justify-center">
+              <div className="h-24 w-24 rounded-full border-4 border-secondary shadow-lg bg-primary flex items-center justify-center">
                 <span className="text-primary-foreground text-2xl font-bold">
                   {testimonial.initials}
                 </span>

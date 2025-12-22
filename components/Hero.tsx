@@ -17,7 +17,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="pt-32 pb-16 md:pt-40 md:pb-24">
+    <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-card">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-8 animate-fade-in">

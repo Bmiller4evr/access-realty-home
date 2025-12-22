@@ -1,5 +1,5 @@
 // ABOUTME: Root layout for Access Realty marketing site
-// ABOUTME: Sets up fonts, metadata, and global styles
+// ABOUTME: Sets up fonts, metadata, and global styles (no Header/Footer - handled by route groups)
 
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro } from "next/font/google";
@@ -32,7 +32,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${beVietnamPro.variable} antialiased`}>{children}</body>
+      <body className={`${beVietnamPro.variable} antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,29 +1,9 @@
 // ABOUTME: Privacy Policy page for Access Realty
 // ABOUTME: Legal privacy policy and data handling information
 
-import Link from "next/link";
-
 export default function PrivacyPolicy() {
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="border-b">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-[#2C5282]">
-            Access Realty
-          </Link>
-          <a
-            href="https://app.access.realty"
-            className="bg-[#2C5282] text-white px-4 py-2 rounded-md hover:bg-[#1e3a5f] transition-colors"
-          >
-            Sign In
-          </a>
-        </nav>
-      </header>
-
-      {/* Content */}
-      <main className="flex-1 py-12">
-        <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 prose prose-lg max-w-none">
+    <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12 bg-card prose prose-lg">
           <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
           <p className="text-gray-600 mb-8">
             <strong>Last Updated:</strong> December 8, 2025
@@ -161,34 +141,15 @@ export default function PrivacyPolicy() {
           <p>If you have any questions regarding this Privacy Policy, wish to exercise your privacy rights, or need assistance with your account, please contact us:</p>
           <div className="mt-4 bg-gray-50 p-6 rounded-lg">
             <p className="font-semibold">Access Realty</p>
-            <p>5755 Rufe Snow Dr STE 160</p>
+            <p>5755 Rufe Snow Dr STE 120</p>
             <p>North Richland Hills, TX 76180</p>
-            <p className="mt-2"><strong>Email:</strong> <a href="mailto:privacy@access.realty" className="text-[#2C5282] hover:underline">privacy@access.realty</a></p>
+            <p className="mt-2"><strong>Email:</strong> <a href="mailto:info@access.realty" className="text-[#2C5282] hover:underline">info@access.realty</a></p>
             <p><strong>Website:</strong> <a href="https://access.realty" className="text-[#2C5282] hover:underline">https://access.realty</a></p>
             <p className="mt-2"><strong>Business Hours:</strong> Monday - Friday, 9:00 AM - 6:00 PM CST</p>
           </div>
 
           <hr className="my-8" />
           <p className="text-sm text-gray-600 text-center">&copy; 2025 Access Realty. All rights reserved.</p>
-        </article>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t py-8 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-600">
-          <div className="flex gap-6 justify-center">
-            <Link href="/" className="hover:text-gray-900">
-              Home
-            </Link>
-            <Link href="/terms" className="hover:text-gray-900">
-              Terms of Service
-            </Link>
-            <Link href="/privacy" className="hover:text-gray-900">
-              Privacy Policy
-            </Link>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </article>
   );
 }

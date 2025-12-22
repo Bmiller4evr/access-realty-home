@@ -75,6 +75,11 @@ const Footer = () => {
               5755 Rufe Snow Dr STE 120<br />
               North Richland Hills, TX 76180
             </p>
+            <p className="text-sm">
+              <a href="tel:+19728207902" className="hover:text-secondary transition-colors">
+                (972) 820-7902
+              </a>
+            </p>
           </div>
         </div>
 

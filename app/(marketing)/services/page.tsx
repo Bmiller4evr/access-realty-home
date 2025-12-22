@@ -1,9 +1,8 @@
 // ABOUTME: Services page with pricing comparison table
 // ABOUTME: Displays Direct List, Direct List+, and Full Service tiers
 
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Check } from "lucide-react";
+import { PlanSelectButton } from "@/components/services/PlanSelectButton";
 
 // Service tier definitions with pricing
 const SERVICE_TIERS = [
@@ -215,10 +214,7 @@ function CellValue({ value }: { value: string | boolean | undefined }) {
 
 export default function Services() {
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-
-      <main className="pt-20 pb-12">
+    <div className="pt-24 pb-12 bg-card">
         <div className="max-w-5xl mx-auto px-4">
           {/* Page Header */}
           <div className="text-center mb-8">
@@ -345,9 +341,9 @@ export default function Services() {
           <div className="hidden md:grid grid-cols-4 gap-2 mb-6">
             <div /> {/* Empty corner cell */}
             {SERVICE_TIERS.map((tier) => (
-              <a
+              <PlanSelectButton
                 key={tier.id}
-                href={tier.ctaUrl}
+                planId={tier.id.replace(/_/g, "-")}
                 className={`text-center py-2 px-4 rounded-lg text-sm font-semibold transition-all ${
                   tier.id === "full_service"
                     ? "bg-primary text-primary-foreground hover:bg-primary-dark"
@@ -355,7 +351,7 @@ export default function Services() {
                 }`}
               >
                 Select <StyledTierName name={tier.name} />
-              </a>
+              </PlanSelectButton>
             ))}
           </div>
 
@@ -442,16 +438,16 @@ export default function Services() {
 
                 {/* Card CTA */}
                 <div className="p-4 pt-0">
-                  <a
-                    href={tier.ctaUrl}
-                    className={`block text-center py-3 px-6 rounded-lg font-semibold transition-all ${
+                  <PlanSelectButton
+                    planId={tier.id.replace(/_/g, "-")}
+                    className={`block w-full text-center py-3 px-6 rounded-lg font-semibold transition-all ${
                       tier.id === "full_service"
                         ? "bg-primary text-primary-foreground hover:bg-primary-dark"
                         : "bg-secondary text-secondary-foreground hover:opacity-90"
                     }`}
                   >
                     Select <StyledTierName name={tier.name} />
-                  </a>
+                  </PlanSelectButton>
                 </div>
               </div>
             ))}
@@ -473,9 +469,6 @@ export default function Services() {
             </a>
           </div>
         </div>
-      </main>
-
-      <Footer />
     </div>
   );
 }
