@@ -170,6 +170,19 @@ export async function POST(request: NextRequest) {
       },
       // Collect billing address for compliance
       billing_address_collection: "required",
+      // Collect first/last name separately for app signup
+      custom_fields: [
+        {
+          key: "first_name",
+          label: { type: "custom", custom: "First name" },
+          type: "text",
+        },
+        {
+          key: "last_name",
+          label: { type: "custom", custom: "Last name" },
+          type: "text",
+        },
+      ],
     });
 
     // Return the client secret for embedded checkout
