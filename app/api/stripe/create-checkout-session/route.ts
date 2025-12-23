@@ -157,6 +157,12 @@ export async function POST(request: NextRequest) {
         },
       ],
       return_url: checkoutReturnUrl,
+      // Create a Stripe Customer to store payment method
+      customer_creation: "always",
+      // Save payment method for future charges (e.g., commission at closing)
+      payment_intent_data: {
+        setup_future_usage: "off_session",
+      },
       metadata: {
         plan,
         source: source || "services-page",
