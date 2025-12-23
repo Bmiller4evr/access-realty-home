@@ -1,8 +1,39 @@
 // ABOUTME: API route to create Stripe Checkout sessions for service tier purchases
 // ABOUTME: Returns clientSecret for embedded checkout (payment stays on marketing site)
+// ABOUTME: Detects environment (preview vs production) to redirect to correct app domain
 
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+
+/**
+ * Determine the app URL based on the current environment.
+ * Maps marketing site domains to their corresponding app domains:
+ *   - access.realty → app.access.realty (production)
+ *   - preview.access.realty → preview.app.access.realty (preview)
+ *   - localhost:4000 → localhost:3000 (local dev)
+ */
+function getAppUrl(request: NextRequest): string {
+  const host = request.headers.get("host") || "";
+
+  // Local development
+  if (host.includes("localhost")) {
+    return "http://localhost:3000";
+  }
+
+  // Preview deployment (preview.access.realty)
+  if (host.startsWith("preview.")) {
+    return "https://preview.app.access.realty";
+  }
+
+  // Vercel preview deployments (access-realty-home-*.vercel.app)
+  if (host.includes("vercel.app")) {
+    // For Vercel preview URLs, still redirect to preview app
+    return "https://preview.app.access.realty";
+  }
+
+  // Production (access.realty)
+  return process.env.NEXT_PUBLIC_APP_URL || "https://app.access.realty";
+}
 
 // Lazy-initialize Stripe to avoid build-time errors when env vars aren't set
 let stripeInstance: Stripe | null = null;
@@ -74,9 +105,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Detect environment and get appropriate app URL
+    const appBaseUrl = getAppUrl(request);
+
     // Full Service has no upfront payment - redirect directly to app
     if (planConfig.amountCents === 0) {
-      const appBaseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://app.access.realty";
       const tier = "full_service";
       const signupUrl = new URL(appBaseUrl);
       signupUrl.searchParams.set("tier", tier);
@@ -96,24 +129,26 @@ export async function POST(request: NextRequest) {
 
     // Build return URL for embedded checkout
     // After payment completes, user is redirected to the app with session info
-    const appBaseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://app.access.realty";
     const tier = plan === "direct-list" ? "direct_list" : plan === "direct-list-plus" ? "direct_list_plus" : plan;
 
-    // Build return URL with UTM params forwarded for attribution tracking
-    const returnUrlParams = new URLSearchParams({
-      stripe_session_id: "{CHECKOUT_SESSION_ID}",
-      tier,
-      ...(source && { ref: source }),
-    });
-
+    // Build query params for return URL
+    // IMPORTANT: Don't use URLSearchParams for {CHECKOUT_SESSION_ID} - it would URL-encode
+    // the curly braces and Stripe wouldn't recognize the template to replace
+    const queryParams: string[] = [
+      `stripe_session_id={CHECKOUT_SESSION_ID}`, // Stripe replaces this - don't encode!
+      `tier=${encodeURIComponent(tier)}`,
+    ];
+    if (source) {
+      queryParams.push(`ref=${encodeURIComponent(source)}`);
+    }
     // Forward UTM params to the app
     if (utmParams) {
       Object.entries(utmParams).forEach(([key, value]) => {
-        if (value) returnUrlParams.set(key, value);
+        if (value) queryParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
       });
     }
 
-    const checkoutReturnUrl = `${appBaseUrl}/?${returnUrlParams.toString()}`;
+    const checkoutReturnUrl = `${appBaseUrl}/?${queryParams.join("&")}`;
 
     // Create Stripe Checkout session in embedded mode
     const stripe = getStripe();
