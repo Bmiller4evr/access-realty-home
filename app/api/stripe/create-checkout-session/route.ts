@@ -7,10 +7,10 @@ import Stripe from "stripe";
 
 /**
  * Determine the app URL based on the current environment.
- * Maps marketing site domains to their corresponding app domains:
- *   - access.realty → app.access.realty (production)
- *   - preview.access.realty → preview.app.access.realty (preview)
- *   - localhost:4000 → localhost:3000 (local dev)
+ * Domain structure:
+ *   - access.realty (marketing prod) → app.access.realty (app prod)
+ *   - *.vercel.app (marketing preview) → preview.access.realty (app staging)
+ *   - localhost:4000 (marketing dev) → localhost:3000 (app dev)
  */
 function getAppUrl(request: NextRequest): string {
   const host = request.headers.get("host") || "";
@@ -20,18 +20,13 @@ function getAppUrl(request: NextRequest): string {
     return "http://localhost:3000";
   }
 
-  // Preview deployment (preview.access.realty)
-  if (host.startsWith("preview.")) {
-    return "https://preview.app.access.realty";
-  }
-
   // Vercel preview deployments (access-realty-home-*.vercel.app)
+  // Redirect to app staging at preview.access.realty
   if (host.includes("vercel.app")) {
-    // For Vercel preview URLs, still redirect to preview app
-    return "https://preview.app.access.realty";
+    return "https://preview.access.realty";
   }
 
-  // Production (access.realty)
+  // Production (access.realty) → app.access.realty
   return process.env.NEXT_PUBLIC_APP_URL || "https://app.access.realty";
 }
 
