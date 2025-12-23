@@ -242,6 +242,25 @@ interface TierSelectionModalProps {
   source?: string;
 }
 
+// Payment authorization terms (source: access-realty-app/src/constants/terms/service-terms.ts)
+const PAYMENT_TERMS = {
+  title: "Payment Authorization",
+  sections: [
+    {
+      heading: "Payment Authorization",
+      content: `By providing your payment method, you authorize Access Realty to:
+• Charge the initial payment immediately
+• Store your payment method securely through Stripe for future authorized charges
+• Process charges for add-on services you request at then-current prices
+• Process charges for equipment non-return fees or cancellation fees as specified in the Service Agreement`,
+    },
+    {
+      heading: "Add-On Services",
+      content: `You authorize charges for any add-on services you request. Add-on pricing is subject to change; final pricing is displayed in the platform at the time of request.`,
+    },
+  ],
+};
+
 export function TierSelectionModal({
   isOpen,
   onClose,
@@ -249,6 +268,8 @@ export function TierSelectionModal({
 }: TierSelectionModalProps) {
   const [error, setError] = useState<string | null>(null);
   const [selectedTier, setSelectedTier] = useState<typeof TIERS[0] | null>(null);
+  const [showTerms, setShowTerms] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
 
   useEffect(() => {
@@ -276,20 +297,36 @@ export function TierSelectionModal({
     const tier = TIERS.find((t) => t.id === tierId);
     if (tier) {
       setSelectedTier(tier);
-      setShowCheckout(true);
+      setShowTerms(true);
+      setTermsAccepted(false);
       setError(null);
     }
+  };
+
+  const handleAcceptTerms = () => {
+    if (termsAccepted) {
+      setShowTerms(false);
+      setShowCheckout(true);
+    }
+  };
+
+  const handleCloseTerms = () => {
+    setShowTerms(false);
+    setSelectedTier(null);
+    setTermsAccepted(false);
   };
 
   const handleCloseCheckout = () => {
     setShowCheckout(false);
     setSelectedTier(null);
+    setTermsAccepted(false);
   };
 
   const handleCheckoutError = (errorMsg: string) => {
     setError(errorMsg);
     setShowCheckout(false);
     setSelectedTier(null);
+    setTermsAccepted(false);
   };
 
   if (!isOpen) return null;
@@ -511,8 +548,71 @@ export function TierSelectionModal({
         </div>
       </div>
 
+      {/* Terms Acceptance Modal */}
+      {selectedTier && showTerms && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="terms-title"
+        >
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={handleCloseTerms} />
+          <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-hidden flex flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+              <h2 id="terms-title" className="text-lg font-semibold text-gray-900">
+                {PAYMENT_TERMS.title}
+              </h2>
+              <button
+                onClick={handleCloseTerms}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                aria-label="Close"
+              >
+                <HiXMark className="h-5 w-5 text-gray-500" />
+              </button>
+            </div>
+
+            {/* Scrollable Terms Content */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              {PAYMENT_TERMS.sections.map((section, idx) => (
+                <div key={idx}>
+                  <h3 className="font-semibold text-gray-900 mb-2">{section.heading}</h3>
+                  <p className="text-sm text-gray-600 whitespace-pre-line">{section.content}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Footer with Checkbox and Button */}
+            <div className="border-t border-gray-200 p-4 space-y-4">
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
+                  className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                />
+                <span className="text-sm text-gray-700">
+                  I have read and agree to the Payment Authorization terms
+                </span>
+              </label>
+              <button
+                onClick={handleAcceptTerms}
+                disabled={!termsAccepted}
+                className={`w-full py-3 px-4 rounded-lg font-semibold transition-colors ${
+                  termsAccepted
+                    ? "bg-primary text-white hover:bg-primary/90"
+                    : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                }`}
+              >
+                Continue to Payment
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Embedded Checkout Modal */}
-      {selectedTier && (
+      {selectedTier && showCheckout && (
         <EmbeddedCheckoutModal
           isOpen={showCheckout}
           onClose={handleCloseCheckout}
