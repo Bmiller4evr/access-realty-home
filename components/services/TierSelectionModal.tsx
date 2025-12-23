@@ -242,24 +242,81 @@ interface TierSelectionModalProps {
   source?: string;
 }
 
-// Payment authorization terms (source: access-realty-app/src/constants/terms/service-terms.ts)
-const PAYMENT_TERMS = {
-  title: "Payment Authorization",
-  sections: [
-    {
-      heading: "Payment Authorization",
-      content: `By providing your payment method, you authorize Access Realty to:
-• Charge the initial payment immediately
-• Store your payment method securely through Stripe for future authorized charges
-• Process charges for add-on services you request at then-current prices
-• Process charges for equipment non-return fees or cancellation fees as specified in the Service Agreement`,
-    },
-    {
-      heading: "Add-On Services",
-      content: `You authorize charges for any add-on services you request. Add-on pricing is subject to change; final pricing is displayed in the platform at the time of request.`,
-    },
-  ],
-};
+// Generate terms of service with tier-specific values
+function generateTermsOfService(tier: typeof TIERS[0]) {
+  // Calculate remaining balance (total minus upfront)
+  const getRemainingBalance = () => {
+    if (tier.id === "direct-list") return "$2,500";
+    if (tier.id === "direct-list-plus") return "$3,500";
+    return "3% of sale price"; // Full service
+  };
+
+  return {
+    title: "Terms of Service",
+    sections: [
+      {
+        number: 1,
+        heading: "Service Description",
+        content: `Access Realty will provide ${tier.name} real estate listing services including MLS access, professional photography, and additional services for a total fee of ${tier.totalPrice} with ${tier.upfrontPrice} due upfront.`,
+      },
+      {
+        number: 2,
+        heading: "Payment Terms",
+        content: `The upfront payment of ${tier.upfrontPrice} is due immediately upon agreement and is processed in real-time. The remaining balance of ${getRemainingBalance()} will be collected from sale proceeds at closing through the title company.`,
+      },
+      {
+        number: 3,
+        heading: "Payment Authorization",
+        content: `By providing your payment method, you authorize Access Realty to: charge the initial payment immediately, store your payment method securely through Stripe for future authorized charges, process charges for add-on services you request at then-current prices, and process charges for equipment non-return fees or cancellation fees as specified below.`,
+      },
+      {
+        number: 4,
+        heading: "Add-On Services",
+        content: `You authorize charges for any add-on services you request. Add-on pricing is subject to change; final pricing is displayed in the platform at the time of request.`,
+      },
+      {
+        number: 5,
+        heading: "Inaccessible Property Fee",
+        content: `A $50 trip charge will be assessed if the property is not accessible or not ready when the photographer arrives for a scheduled appointment. This fee covers the photographer's time, travel, and scheduling costs for the missed appointment.`,
+      },
+      {
+        number: 6,
+        heading: "Equipment Fees",
+        content: `Access Realty provides an electronic lockbox during the listing period. You agree to return the lockbox in good working condition within 10 business days of listing expiration, sale closing, or listing withdrawal. Lockbox non-return fee: $95.00.`,
+      },
+      {
+        number: 7,
+        heading: "Seller's Authority & Title",
+        content: `By entering this agreement, you represent and warrant that: you are the legal owner of the property or have been duly authorized to act on behalf of all owners; you have the legal right and authority to list and sell the property; and there are no unresolved legal matters that would prevent the conveyance of clear and marketable title. No refunds will be issued if the transaction fails to close due to: inability to deliver clear and marketable title; unresolved liens, judgments, tax delinquencies, or encumbrances; pending or unresolved divorce proceedings affecting property ownership; incomplete probate or estate administration; lack of required signatures from co-owners, heirs, spouses, or other parties with ownership interest; disputes over property boundaries, easements, or access rights; or any other title defect discovered during the transaction. You are solely responsible for resolving any title issues at your own expense prior to closing. All services rendered by Access Realty remain billable regardless of whether the transaction closes.`,
+      },
+      {
+        number: 8,
+        heading: "Cancellation",
+        content: `A cancellation fee of $395 applies if you withdraw your listing to cover administrative costs, MLS fees, photography, and marketing expenses already incurred.`,
+      },
+      {
+        number: 9,
+        heading: "Refund Policy",
+        content: `The initial payment is non-refundable. Any billing disputes must be reported in writing within 14 days of the charge date.`,
+      },
+      {
+        number: 10,
+        heading: "Liability",
+        content: `Access Realty's liability is limited to the amount of fees paid. We are not responsible for market conditions, buyer behavior, or factors outside our control.`,
+      },
+      {
+        number: 11,
+        heading: "Duration",
+        content: `This agreement remains in effect until services are fully delivered and any outstanding balances are settled.`,
+      },
+      {
+        number: 12,
+        heading: "Governing Law",
+        content: `This agreement shall be governed by the laws of the State of Texas. Any disputes shall first be submitted to mediation before litigation. Any legal action shall be brought exclusively in courts located in Tarrant County, Texas.`,
+      },
+    ],
+  };
+}
 
 export function TierSelectionModal({
   isOpen,
@@ -549,67 +606,77 @@ export function TierSelectionModal({
       </div>
 
       {/* Terms Acceptance Modal */}
-      {selectedTier && showTerms && (
-        <div
-          className="fixed inset-0 z-[60] flex items-center justify-center p-4"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="terms-title"
-        >
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={handleCloseTerms} />
-          <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-hidden flex flex-col">
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-200">
-              <h2 id="terms-title" className="text-lg font-semibold text-gray-900">
-                {PAYMENT_TERMS.title}
-              </h2>
-              <button
-                onClick={handleCloseTerms}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                aria-label="Close"
-              >
-                <HiXMark className="h-5 w-5 text-gray-500" />
-              </button>
-            </div>
-
-            {/* Scrollable Terms Content */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {PAYMENT_TERMS.sections.map((section, idx) => (
-                <div key={idx}>
-                  <h3 className="font-semibold text-gray-900 mb-2">{section.heading}</h3>
-                  <p className="text-sm text-gray-600 whitespace-pre-line">{section.content}</p>
+      {selectedTier && showTerms && (() => {
+        const terms = generateTermsOfService(selectedTier);
+        return (
+          <div
+            className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="terms-title"
+          >
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={handleCloseTerms} />
+            <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
+              {/* Header */}
+              <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                <div>
+                  <h2 id="terms-title" className="text-lg font-semibold text-gray-900">
+                    {terms.title}
+                  </h2>
+                  <p className="text-sm text-gray-500">
+                    <TierName name={selectedTier.name} /> - {selectedTier.totalPrice}
+                  </p>
                 </div>
-              ))}
-            </div>
+                <button
+                  onClick={handleCloseTerms}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  aria-label="Close"
+                >
+                  <HiXMark className="h-5 w-5 text-gray-500" />
+                </button>
+              </div>
 
-            {/* Footer with Checkbox and Button */}
-            <div className="border-t border-gray-200 p-4 space-y-4">
-              <label className="flex items-start gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={termsAccepted}
-                  onChange={(e) => setTermsAccepted(e.target.checked)}
-                  className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                />
-                <span className="text-sm text-gray-700">
-                  I have read and agree to the Payment Authorization terms
-                </span>
-              </label>
-              <button
-                onClick={handleAcceptTerms}
-                disabled={!termsAccepted}
-                className={`w-full py-3 px-4 rounded-lg font-semibold transition-colors ${
-                  termsAccepted
-                    ? "bg-primary text-white hover:bg-primary/90"
-                    : "bg-gray-200 text-gray-500 cursor-not-allowed"
-                }`}
-              >
-                Continue to Payment
-              </button>
+              {/* Scrollable Terms Content */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-4 text-sm">
+                {terms.sections.map((section) => (
+                  <div key={section.number}>
+                    <h3 className="font-semibold text-gray-900 mb-1">
+                      {section.number}. {section.heading}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">{section.content}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Footer with Checkbox and Button */}
+              <div className="border-t border-gray-200 p-4 space-y-4 bg-gray-50">
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={termsAccepted}
+                    onChange={(e) => setTermsAccepted(e.target.checked)}
+                    className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                  />
+                  <span className="text-sm text-gray-700">
+                    I have read and agree to the Terms of Service
+                  </span>
+                </label>
+                <button
+                  onClick={handleAcceptTerms}
+                  disabled={!termsAccepted}
+                  className={`w-full py-3 px-4 rounded-lg font-semibold transition-colors ${
+                    termsAccepted
+                      ? "bg-primary text-white hover:bg-primary/90"
+                      : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                  }`}
+                >
+                  Continue to Payment
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* Embedded Checkout Modal */}
       {selectedTier && showCheckout && (
