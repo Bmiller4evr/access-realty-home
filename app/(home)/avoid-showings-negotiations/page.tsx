@@ -1,0 +1,148 @@
+// ABOUTME: Hybrid page for sellers who want to avoid showings/negotiations
+// ABOUTME: Highlights Cash, 2 Payment, and Seller Finance solutions
+
+import Link from "next/link";
+import { HiFaceSmile, HiCheck, HiArrowRight, HiXMark } from "react-icons/hi2";
+
+const solutions = [
+  {
+    name: "Cash Offer",
+    description: "Zero showings, zero negotiations. We make one fair offer and handle everything. You stay in control of your timeline.",
+    href: "https://metroplexhomebuyers.com",
+    external: true,
+  },
+  {
+    name: "2 Payment",
+    description: "Sell directly without listing. Large upfront payment plus additional payments over time — no open houses required.",
+    href: "/solutions/2-payment",
+    external: false,
+  },
+  {
+    name: "Seller Finance",
+    description: "Sell directly to a buyer you approve. No showings to strangers, straightforward terms you control.",
+    href: "/solutions/seller-finance",
+    external: false,
+  },
+];
+
+const painPoints = [
+  { pain: "Keeping your home \"show ready\"", avoided: "No cleaning before every showing" },
+  { pain: "Strangers walking through your space", avoided: "Sell without open houses" },
+  { pain: "Weekend showings disrupting your life", avoided: "Your schedule, your terms" },
+  { pain: "Back-and-forth price negotiations", avoided: "Clear, straightforward offers" },
+  { pain: "Repair request negotiations", avoided: "Sell as-is or on your terms" },
+  { pain: "Uncertainty about if/when it will close", avoided: "Guaranteed closing dates available" },
+];
+
+export default function AvoidShowingsNegotiationsPage() {
+  return (
+    <div className="bg-background min-h-screen">
+      {/* Hero */}
+      <section className="pt-24 pb-12 bg-gradient-to-b from-primary/5 to-background">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-secondary/20 mb-6">
+              <HiFaceSmile className="h-8 w-8 text-secondary" />
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-primary mb-6">
+              Avoid Showings &amp; Negotiations
+            </h1>
+            <p className="text-xl text-muted-foreground">
+              Selling your home shouldn&apos;t mean turning your life upside down.
+              We have options that let you stay in control — and keep your sanity.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Pain Points */}
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-xl font-bold text-foreground mb-6 text-center">
+              Traditional Selling Pain Points — Avoided
+            </h2>
+            <div className="grid gap-4">
+              {painPoints.map((item) => (
+                <div key={item.pain} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 bg-card rounded-lg p-4 border border-border">
+                  <div className="flex items-center gap-2 flex-1">
+                    <HiXMark className="h-5 w-5 text-red-500 flex-shrink-0" />
+                    <span className="text-muted-foreground line-through">{item.pain}</span>
+                  </div>
+                  <div className="flex items-center gap-2 flex-1">
+                    <HiCheck className="h-5 w-5 text-secondary flex-shrink-0" />
+                    <span className="text-foreground font-medium">{item.avoided}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Solutions */}
+      <section className="py-16 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl font-bold text-foreground mb-8 text-center">
+              Stress-Free Selling Options
+            </h2>
+
+            <div className="space-y-4">
+              {solutions.map((solution) => (
+                <div
+                  key={solution.name}
+                  className="bg-background border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+                >
+                  <div className="flex-grow">
+                    <h3 className="text-lg font-bold text-primary mb-1">{solution.name}</h3>
+                    <p className="text-muted-foreground">{solution.description}</p>
+                  </div>
+
+                  {solution.external ? (
+                    <a
+                      href={solution.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary-dark transition-colors whitespace-nowrap"
+                    >
+                      Learn More
+                      <HiArrowRight className="h-4 w-4" />
+                    </a>
+                  ) : (
+                    <Link
+                      href={solution.href}
+                      className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary-dark transition-colors whitespace-nowrap"
+                    >
+                      Learn More
+                      <HiArrowRight className="h-4 w-4" />
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-16 bg-primary">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-primary-foreground mb-4">
+            Find Your Perfect Fit
+          </h2>
+          <p className="text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
+            Take our quick quiz to get a personalized recommendation based on your timeline, property, and priorities.
+          </p>
+          <Link
+            href="/selling-plan"
+            className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-8 py-4 rounded-lg font-semibold hover:bg-secondary-light transition-colors"
+          >
+            Find Your Selling Plan
+            <HiArrowRight className="h-5 w-5" />
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+}
