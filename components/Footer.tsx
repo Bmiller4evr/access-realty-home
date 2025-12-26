@@ -25,10 +25,18 @@ const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  href="/services"
+                  href="/solutions"
                   className="hover:text-secondary transition-colors"
                 >
                   Solutions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/staff"
+                  className="hover:text-secondary transition-colors"
+                >
+                  Our Team
                 </Link>
               </li>
               <li>
@@ -53,14 +61,6 @@ const Footer = () => {
                   className="hover:text-secondary transition-colors"
                 >
                   Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/staff"
-                  className="hover:text-secondary transition-colors"
-                >
-                  Our Team
                 </Link>
               </li>
             </ul>
