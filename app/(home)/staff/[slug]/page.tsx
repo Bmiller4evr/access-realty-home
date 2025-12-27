@@ -1,9 +1,10 @@
 // ABOUTME: Individual staff member profile page
-// ABOUTME: Displays agent bio, services, and contact info
+// ABOUTME: Displays agent bio, services, contact info, and current listings
 
 import { notFound } from "next/navigation";
 import { HiOutlineHomeModern, HiArrowTrendingUp, HiMapPin, HiBuildingOffice2 } from "react-icons/hi2";
 import CalendlyButton from "@/components/CalendlyButton";
+import ListingsCarousel from "@/components/listings/ListingsCarousel";
 
 // Staff data - will be replaced with Supabase data later
 const staffData: Record<string, {
@@ -13,6 +14,7 @@ const staffData: Record<string, {
   email: string;
   phone: string;
   calendlyUrl?: string;
+  listAgentKey?: string; // MLS agent key for listings lookup
   bio: string[];
   services: { icon: string; title: string; description: string }[];
 }> = {
@@ -189,6 +191,17 @@ export default async function StaffMemberPage({ params }: { params: Promise<{ sl
           </div>
         </div>
       </section>
+
+      {/* Current Listings Section */}
+      {staff.listAgentKey && (
+        <ListingsCarousel
+          title={`${staff.name.split(" ")[0]}'s Current Listings`}
+          subtitle="Properties I'm currently representing"
+          agentKey={staff.listAgentKey}
+          limit={8}
+          showViewAll={false}
+        />
+      )}
 
       {/* CTA Section */}
       <section className="py-16">

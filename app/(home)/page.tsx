@@ -6,12 +6,20 @@ import Testimonials from "@/components/Testimonials";
 import FlipCards from "@/components/FlipCards";
 import Benefits from "@/components/Benefits";
 import FinalCTA from "@/components/FinalCTA";
+import ListingsCarousel from "@/components/listings/ListingsCarousel";
+
+// Revalidate listings every hour
+export const revalidate = 3600;
 
 export default function Home() {
   return (
     <>
       <Hero />
       <Testimonials />
+      <ListingsCarousel
+        title="Our Current Listings"
+        subtitle="Browse homes represented by Access Realty"
+      />
       <FlipCards />
       <Benefits />
       <FinalCTA />

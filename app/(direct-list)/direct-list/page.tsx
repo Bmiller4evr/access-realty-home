@@ -15,6 +15,10 @@ import {
 import Link from "next/link";
 import { TierSelectTrigger } from "@/components/services/TierSelectTrigger";
 import { StyledTierName } from "@/components/services/StyledTierName";
+import ListingsCarousel from "@/components/listings/ListingsCarousel";
+
+// Revalidate every hour for fresh listing data
+export const revalidate = 3600;
 
 // Styled DirectList logo component
 function DirectListLogo({ className = "" }: { className?: string }) {
@@ -413,6 +417,12 @@ export default function DirectListPage() {
           </p>
         </div>
       </section>
+
+      {/* Current Listings Section - Social Proof */}
+      <ListingsCarousel
+        title="Our Current Listings"
+        subtitle="See the homes we're helping clients sell right now"
+      />
 
       {/* Simplified Final CTA Section */}
       <section className="py-16 bg-primary text-primary-foreground">
