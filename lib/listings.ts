@@ -114,7 +114,7 @@ export async function getListings(
 
   // Apply optional filters
   if (agentKey) {
-    query = query.eq("list_agent_key", agentKey);
+    query = query.eq("list_agent_mls_id", agentKey);
   }
   if (minPrice !== undefined) {
     query = query.gte("list_price", minPrice);

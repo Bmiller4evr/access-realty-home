@@ -25,6 +25,7 @@ const staffData: Record<string, {
     email: "JB@access.realty",
     phone: "(972) 820-7902",
     calendlyUrl: "calendly.com/jb-access/phone-call",
+    listAgentKey: "0549418",
     bio: [
       "I'm a full-time Realtor® and Broker Associate serving the Dallas–Fort Worth Metroplex, dedicated to helping clients navigate the buying and selling process with clarity, confidence, and ease. With years of local expertise, strong negotiation skills, and a client-first approach, I guide every step of the journey through clear communication and genuine care.",
       "To me, real estate is about more than contracts and closings—it's about people, families, and meaningful life moments. Many of my clients remain part of my life long after the transaction ends, becoming friends I genuinely value. Whether you're a first-time buyer, a seasoned investor, or selling to maximize value, I treat your goals as if they were my own and work tirelessly to protect your best interests.",
@@ -46,6 +47,7 @@ const staffData: Record<string, {
     email: "Cassidy@access.realty",
     phone: "(972) 820-7902",
     calendlyUrl: "calendly.com/cassidy-access/phone-call",
+    listAgentKey: "0681230",
     bio: [
       "As a dedicated Realtor® serving the Dallas–Fort Worth area, I'm passionate about helping clients achieve their real estate dreams. My commitment to exceptional service and attention to detail ensures a smooth and successful transaction every time.",
       "Whether you're buying your first home, upgrading to your forever home, or selling to start a new chapter, I bring the expertise and dedication needed to make your real estate goals a reality.",
