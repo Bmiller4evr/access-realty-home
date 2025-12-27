@@ -4,6 +4,7 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import { notFound } from "next/navigation";
 import { HiArrowLeft, HiMapPin } from "react-icons/hi2";
 import {
@@ -57,6 +58,49 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 // Revalidate on-demand (new listings render server-side, then cache)
 export const revalidate = 3600;
 
+// Generate JSON-LD structured data for SEO
+function generateJsonLd(listing: NonNullable<Awaited<ReturnType<typeof getListingById>>>) {
+  const address = formatAddress(listing);
+  const cityState = formatCityState(listing);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    name: `${address}, ${cityState}`,
+    description: listing.public_remarks?.slice(0, 500) || `${listing.bedrooms_total} bedroom, ${listing.bathrooms_total_decimal} bathroom home in ${listing.city}`,
+    url: `https://access.realty/homes-for-sale/${listing.listing_id}`,
+    datePosted: listing.on_market_date || undefined,
+    image: listing.photo_urls?.slice(0, 6) || [],
+    offers: {
+      "@type": "Offer",
+      price: listing.list_price,
+      priceCurrency: "USD",
+      availability: listing.standard_status === "Active" ? "https://schema.org/InStock" : "https://schema.org/SoldOut",
+    },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: listing.unparsed_address || `${listing.street_number} ${listing.street_name} ${listing.street_suffix}`.trim(),
+      addressLocality: listing.city,
+      addressRegion: listing.state_or_province,
+      postalCode: listing.postal_code,
+      addressCountry: "US",
+    },
+    geo: listing.latitude && listing.longitude ? {
+      "@type": "GeoCoordinates",
+      latitude: listing.latitude,
+      longitude: listing.longitude,
+    } : undefined,
+    floorSize: listing.living_area ? {
+      "@type": "QuantitativeValue",
+      value: listing.living_area,
+      unitCode: "FTK", // square feet
+    } : undefined,
+    numberOfRooms: listing.bedrooms_total,
+    numberOfBathroomsTotal: listing.bathrooms_total_decimal,
+    yearBuilt: listing.year_built,
+  };
+}
+
 export default async function ListingDetail({ params }: PageProps) {
   const { listing_id } = await params;
   const listing = await getListingById(listing_id);
@@ -89,8 +133,19 @@ export default async function ListingDetail({ params }: PageProps) {
     { label: "High School", value: listing.high_school },
   ].filter((s) => s.value !== null && s.value !== undefined);
 
+  const jsonLd = generateJsonLd(listing);
+
   return (
     <div className="min-h-screen bg-background">
+      {/* JSON-LD structured data for SEO */}
+      <Script
+        id="listing-jsonld"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+      >
+        {JSON.stringify(jsonLd)}
+      </Script>
+
       {/* Photo Gallery - Compact Zillow-style grid */}
       <section className="bg-background pt-20">
         <div className="container mx-auto px-4 py-4">
