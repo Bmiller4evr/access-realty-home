@@ -73,6 +73,7 @@ const questions: Question[] = [
       { id: "showings", label: "Showings" },
       { id: "negotiations", label: "Back-and-forth negotiations" },
       { id: "time", label: "Excessive time spent during the sales process" },
+      { id: "none", label: "None of the above", description: "I'm open to whatever gets me the best result" },
     ],
   },
   {
@@ -214,6 +215,28 @@ export default function SellingPlanPage() {
 
   const handleMultiSelect = (optionId: string) => {
     const current = (answers[question.id] as string[]) || [];
+
+    // Special case: "No repairs needed" on Q3 or "None of the above" on Q4 should auto-advance
+    if ((question.id === "repairs" || question.id === "avoid") && optionId === "none") {
+      setAnswers({ ...answers, [question.id]: [optionId] });
+      setTimeout(() => {
+        transitionTo("left", () => {
+          if (currentQuestion < questions.length - 1) {
+            setCurrentQuestion(currentQuestion + 1);
+          } else {
+            setCompleted(true);
+          }
+        });
+      }, 150);
+      return;
+    }
+
+    // If selecting another option, remove "none" if it was selected
+    if ((question.id === "repairs" || question.id === "avoid") && optionId !== "none" && current.includes("none")) {
+      setAnswers({ ...answers, [question.id]: [optionId] });
+      return;
+    }
+
     if (current.includes(optionId)) {
       setAnswers({
         ...answers,
