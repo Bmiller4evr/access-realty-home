@@ -10,7 +10,7 @@ export default function RedirectClient() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace("/direct-list?utm_source=yard_sign&utm_medium=qr&utm_campaign=direct_list");
+    router.replace("/direct-list?utm_source=qr&utm_medium=yard_sign&utm_campaign=direct_list");
   }, [router]);
 
   return (
