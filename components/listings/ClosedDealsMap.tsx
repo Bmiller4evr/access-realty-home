@@ -127,24 +127,29 @@ export default function ClosedDealsMap({ deals, agentName }: ClosedDealsMapProps
             position={{ lat: selectedDeal.latitude, lng: selectedDeal.longitude }}
             onCloseClick={() => setSelectedDeal(null)}
           >
-            <div className="p-2 min-w-[200px]">
-              <p className="font-bold text-gray-900 text-lg">
-                {formatPrice(selectedDeal.list_price)}
-              </p>
-              <p className="text-sm text-gray-700 mt-1">
-                {selectedDeal.unparsed_address}
-              </p>
-              <p className="text-sm text-gray-600 mt-2 flex gap-3">
-                {selectedDeal.bedrooms_total && (
-                  <span>{selectedDeal.bedrooms_total} bed</span>
-                )}
-                {selectedDeal.bathrooms_total_decimal && (
-                  <span>{selectedDeal.bathrooms_total_decimal} bath</span>
-                )}
-                {selectedDeal.living_area && (
-                  <span>{selectedDeal.living_area.toLocaleString()} sqft</span>
-                )}
-              </p>
+            <div className="flex gap-3 p-1" style={{ maxWidth: 320 }}>
+              {selectedDeal.photo_urls?.[0] && (
+                <img
+                  src={selectedDeal.photo_urls[0]}
+                  alt={selectedDeal.unparsed_address || "Property"}
+                  className="w-24 h-20 object-cover rounded flex-shrink-0"
+                />
+              )}
+              <div className="min-w-0">
+                <p className="font-bold text-gray-900">
+                  {formatPrice(selectedDeal.list_price)}
+                </p>
+                <p className="text-xs text-gray-700 truncate">
+                  {selectedDeal.unparsed_address}
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  {[
+                    selectedDeal.bedrooms_total && `${selectedDeal.bedrooms_total} bed`,
+                    selectedDeal.bathrooms_total_decimal && `${selectedDeal.bathrooms_total_decimal} bath`,
+                    selectedDeal.living_area && `${selectedDeal.living_area.toLocaleString()} sqft`,
+                  ].filter(Boolean).join(" · ")}
+                </p>
+              </div>
             </div>
           </InfoWindow>
         )}

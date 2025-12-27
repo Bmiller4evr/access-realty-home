@@ -275,7 +275,8 @@ const MAP_SELECT_FIELDS = `
   bathrooms_total_decimal,
   living_area,
   latitude,
-  longitude
+  longitude,
+  photo_urls
 `;
 
 export interface ClosedDeal {
@@ -289,26 +290,25 @@ export interface ClosedDeal {
   living_area: number | null;
   latitude: number | null;
   longitude: number | null;
+  photo_urls: string[] | null;
 }
 
 /**
  * Fetch closed deals for an agent (for map display)
+ * Note: Uses list_agent_mls_id index directly (no office filter needed)
  */
 export async function getClosedDeals(agentMlsId: string): Promise<ClosedDeal[]> {
-  const officeKeys = getOfficeKeys(ACCESS_REALTY_OFFICE_MLS_IDS);
-
   const { data, error } = await supabase
     .from("mls_listings")
     .select(MAP_SELECT_FIELDS)
     .eq("mls_name", MLS_NAME)
-    .in("list_office_key", officeKeys)
     .eq("list_agent_mls_id", agentMlsId)
     .eq("standard_status", "Closed")
     .neq("property_type", "Residential Lease")
     .not("latitude", "is", null)
     .not("longitude", "is", null)
     .order("list_price", { ascending: false })
-    .limit(100);
+    .limit(1000);
 
   if (error) {
     console.error("Error fetching closed deals:", error);
