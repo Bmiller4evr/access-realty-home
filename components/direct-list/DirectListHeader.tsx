@@ -1,5 +1,5 @@
 // ABOUTME: Header component for DirectList pages
-// ABOUTME: Includes How It Works link (relevant to DirectList flow)
+// ABOUTME: Minimal nav with Compare Plans and Sign In
 
 import Link from "next/link";
 
@@ -17,12 +17,6 @@ export function DirectListHeader() {
             </span>
           </Link>
           <nav className="hidden md:flex items-center gap-8">
-            <Link
-              href="/selling-plan"
-              className="text-foreground hover:text-secondary transition-colors"
-            >
-              Selling Plan
-            </Link>
             <Link
               href="/services"
               className="text-foreground hover:text-secondary transition-colors"
