@@ -3,7 +3,7 @@
 
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo } from "react";
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from "@react-google-maps/api";
 import type { ClosedDeal } from "@/lib/listings";
 
@@ -62,7 +62,26 @@ export default function ClosedDealsMap({ deals, agentName }: ClosedDealsMapProps
       }
     : defaultCenter;
 
+  // Memoize marker icon - only compute when Google Maps is loaded
+  // This prevents "google is not defined" errors on mobile
+  const markerIcon = useMemo(() => {
+    if (!isLoaded || typeof google === "undefined" || !google.maps?.SymbolPath) {
+      return undefined;
+    }
+    return {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 8,
+      fillColor: "#284b70",
+      fillOpacity: 0.9,
+      strokeColor: "#ffffff",
+      strokeWeight: 2,
+    };
+  }, [isLoaded]);
+
   const onLoad = useCallback((map: google.maps.Map) => {
+    // Safety check for google object
+    if (typeof google === "undefined" || !google.maps) return;
+
     if (deals.length > 1) {
       const bounds = new google.maps.LatLngBounds();
       deals.forEach((deal) => {
@@ -72,7 +91,7 @@ export default function ClosedDealsMap({ deals, agentName }: ClosedDealsMapProps
       });
       map.fitBounds(bounds);
       // Add slight zoom out for padding
-      const listener = google.maps.event.addListenerOnce(map, 'bounds_changed', () => {
+      google.maps.event.addListenerOnce(map, 'bounds_changed', () => {
         const zoom = map.getZoom();
         if (zoom && zoom > 12) map.setZoom(12);
       });
@@ -110,14 +129,7 @@ export default function ClosedDealsMap({ deals, agentName }: ClosedDealsMapProps
               key={deal.id}
               position={{ lat: deal.latitude, lng: deal.longitude }}
               onClick={() => setSelectedDeal(deal)}
-              icon={{
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 8,
-                fillColor: "#284b70",
-                fillOpacity: 0.9,
-                strokeColor: "#ffffff",
-                strokeWeight: 2,
-              }}
+              icon={markerIcon}
             />
           )
         ))}
