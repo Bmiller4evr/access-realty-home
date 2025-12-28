@@ -2,7 +2,7 @@
 // ABOUTME: Displays Direct List, Direct List+, and Full Service tiers
 
 import { HiCheck } from "react-icons/hi2";
-import { PlanSelectButton } from "@/components/services/PlanSelectButton";
+import { TierSelectTrigger } from "@/components/services/TierSelectTrigger";
 
 // Service tier definitions with pricing
 const SERVICE_TIERS = [
@@ -341,13 +341,14 @@ export default function Services() {
           <div className="hidden md:grid grid-cols-4 gap-2 mb-6">
             <div /> {/* Empty corner cell */}
             {SERVICE_TIERS.map((tier) => (
-              <PlanSelectButton
+              <TierSelectTrigger
                 key={tier.id}
-                planId={tier.id.replace(/_/g, "-")}
+                initialTier={tier.id.replace(/_/g, "-")}
+                source="services-page"
                 className="text-center py-2 px-4 rounded-lg text-sm font-semibold transition-all bg-primary text-primary-foreground hover:bg-primary-dark"
               >
                 Select <StyledTierName name={tier.name} />
-              </PlanSelectButton>
+              </TierSelectTrigger>
             ))}
           </div>
 
@@ -434,12 +435,13 @@ export default function Services() {
 
                 {/* Card CTA */}
                 <div className="p-4 pt-0">
-                  <PlanSelectButton
-                    planId={tier.id.replace(/_/g, "-")}
+                  <TierSelectTrigger
+                    initialTier={tier.id.replace(/_/g, "-")}
+                    source="services-page"
                     className="block w-full text-center py-3 px-6 rounded-lg font-semibold transition-all bg-primary text-primary-foreground hover:bg-primary-dark"
                   >
                     Select <StyledTierName name={tier.name} />
-                  </PlanSelectButton>
+                  </TierSelectTrigger>
                 </div>
               </div>
             ))}

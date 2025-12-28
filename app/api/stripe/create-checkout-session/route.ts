@@ -1,5 +1,5 @@
 // ABOUTME: API route to create Stripe Checkout sessions for service tier purchases
-// ABOUTME: Returns clientSecret for embedded checkout (payment stays on marketing site)
+// ABOUTME: Returns redirect URL for hosted checkout (redirects to Stripe)
 // ABOUTME: Detects environment (preview vs production) to redirect to correct app domain
 
 import { NextRequest, NextResponse } from "next/server";
@@ -145,11 +145,11 @@ export async function POST(request: NextRequest) {
 
     const checkoutReturnUrl = `${appBaseUrl}/?${queryParams.join("&")}`;
 
-    // Create Stripe Checkout session in embedded mode
+    // Create Stripe Checkout session in embedded mode (stays on our site)
     const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
+      ui_mode: "embedded",
       mode: "payment",
-      ui_mode: "embedded", // Embedded checkout - stays on our site
       line_items: [
         {
           price: planConfig.priceId,

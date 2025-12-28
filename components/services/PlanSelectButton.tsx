@@ -81,8 +81,9 @@ export function PlanSelectButton({
       }
 
       // Redirect to Stripe Checkout or app signup
-      if (data.url) {
-        window.location.href = data.url;
+      const redirectUrl = data.url || data.redirectUrl;
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
       }
     } catch (err) {
       console.error("Checkout error:", err);
