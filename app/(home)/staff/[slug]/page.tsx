@@ -11,6 +11,7 @@ import { getStaffBySlug, getStaffSlugs } from "@/lib/staff";
 
 // Local avatar images by slug (until we have storage)
 const staffAvatars: Record<string, string> = {
+  "justin-brown": "/staff/justin-brown.jpg",
   "cassidy-spilker": "/staff/cassidy-spilker.webp",
 };
 
