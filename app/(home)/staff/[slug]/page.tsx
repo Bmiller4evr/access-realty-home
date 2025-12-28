@@ -2,11 +2,17 @@
 // ABOUTME: Displays agent bio, services, contact info, and current listings
 
 import { notFound } from "next/navigation";
-import { HiOutlineHomeModern, HiArrowTrendingUp, HiMapPin, HiBuildingOffice2 } from "react-icons/hi2";
+import Image from "next/image";
+import { HiOutlineHomeModern, HiArrowTrendingUp, HiMapPin, HiBuildingOffice2, HiCalendarDays } from "react-icons/hi2";
 import ListingsCarousel from "@/components/listings/ListingsCarousel";
 import ClosedDealsSection from "@/components/listings/ClosedDealsSection";
 import ContactSection from "@/components/staff/ContactSection";
 import { getStaffBySlug, getStaffSlugs } from "@/lib/staff";
+
+// Local avatar images by slug (until we have storage)
+const staffAvatars: Record<string, string> = {
+  "cassidy-spilker": "/staff/cassidy-spilker.webp",
+};
 
 function formatPhone(phone: string): string {
   const digits = phone.replace(/\D/g, "");
@@ -59,6 +65,9 @@ export default async function StaffMemberPage({ params }: { params: Promise<{ sl
   const phone = staff.phone || "9728207902";
   const formattedPhone = formatPhone(phone);
   const telPhone = phone.replace(/\D/g, "");
+  const avatarUrl = staffAvatars[slug] || staff.avatar_url;
+  const hasCalendly = staff.calendly_phone_url || staff.calendly_remote_url;
+  const calendlyUrl = staff.calendly_phone_url || staff.calendly_remote_url;
 
   return (
     <div className="bg-card">
@@ -66,11 +75,24 @@ export default async function StaffMemberPage({ params }: { params: Promise<{ sl
       <section className="pt-24 pb-16 bg-muted">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Avatar */}
-          <div className="h-40 w-40 rounded-full border-4 border-secondary bg-primary mx-auto mb-6 flex items-center justify-center">
-            <span className="text-primary-foreground text-5xl font-bold">
-              {staff.initials}
-            </span>
-          </div>
+          {avatarUrl ? (
+            <div className="h-40 w-40 rounded-full border-4 border-secondary mx-auto mb-6 overflow-hidden">
+              <Image
+                src={avatarUrl}
+                alt={name}
+                width={160}
+                height={160}
+                className="object-cover w-full h-full"
+                priority
+              />
+            </div>
+          ) : (
+            <div className="h-40 w-40 rounded-full border-4 border-secondary bg-primary mx-auto mb-6 flex items-center justify-center">
+              <span className="text-primary-foreground text-5xl font-bold">
+                {staff.initials}
+              </span>
+            </div>
+          )}
 
           <h1 className="text-4xl md:text-5xl font-bold text-primary mb-2">
             {name}
@@ -92,6 +114,17 @@ export default async function StaffMemberPage({ params }: { params: Promise<{ sl
             >
               {formattedPhone}
             </a>
+            {hasCalendly && (
+              <a
+                href={calendlyUrl!}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border-2 border-primary text-primary px-6 py-3 rounded-md font-semibold hover:bg-primary hover:text-primary-foreground transition-colors inline-flex items-center gap-2"
+              >
+                <HiCalendarDays className="h-5 w-5" />
+                Book Online
+              </a>
+            )}
           </div>
         </div>
       </section>
