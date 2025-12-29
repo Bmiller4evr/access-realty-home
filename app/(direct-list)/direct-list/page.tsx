@@ -206,7 +206,7 @@ export default function DirectListPage() {
           </div>
 
           <div className="space-y-8">
-            {/* Step 1 */}
+            {/* Step 1 - Left */}
             <div className="flex gap-6 items-start">
               <div className="flex-shrink-0 h-12 w-12 rounded-full bg-primary flex items-center justify-center">
                 <HiOutlineDocumentText className="h-6 w-6 text-primary-foreground" />
@@ -221,8 +221,8 @@ export default function DirectListPage() {
               </div>
             </div>
 
-            {/* Step 2 */}
-            <div className="flex gap-6 items-start">
+            {/* Step 2 - Right on desktop */}
+            <div className="flex gap-6 items-start md:flex-row-reverse md:text-right">
               <div className="flex-shrink-0 h-12 w-12 rounded-full bg-primary flex items-center justify-center">
                 <HiOutlineCamera className="h-6 w-6 text-primary-foreground" />
               </div>
@@ -236,7 +236,7 @@ export default function DirectListPage() {
               </div>
             </div>
 
-            {/* Step 3 */}
+            {/* Step 3 - Left */}
             <div className="flex gap-6 items-start">
               <div className="flex-shrink-0 h-12 w-12 rounded-full bg-primary flex items-center justify-center">
                 <HiOutlineGlobeAlt className="h-6 w-6 text-primary-foreground" />
@@ -251,8 +251,8 @@ export default function DirectListPage() {
               </div>
             </div>
 
-            {/* Step 4 */}
-            <div className="flex gap-6 items-start">
+            {/* Step 4 - Right on desktop */}
+            <div className="flex gap-6 items-start md:flex-row-reverse md:text-right">
               <div className="flex-shrink-0 h-12 w-12 rounded-full bg-primary flex items-center justify-center">
                 <HiOutlineLifebuoy className="h-6 w-6 text-primary-foreground" />
               </div>
