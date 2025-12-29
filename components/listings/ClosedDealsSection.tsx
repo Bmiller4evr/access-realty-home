@@ -19,8 +19,15 @@ export default async function ClosedDealsSection({
     return null; // Don't render section if no closed deals
   }
 
-  // Calculate stats
-  const totalVolume = deals.reduce(
+  // Calculate stats by side
+  const listingDeals = deals.filter((d) => d.side === "listing");
+  const buyerDeals = deals.filter((d) => d.side === "buyer");
+
+  const listingVolume = listingDeals.reduce(
+    (sum, d) => sum + (d.list_price || 0),
+    0
+  );
+  const buyerVolume = buyerDeals.reduce(
     (sum, d) => sum + (d.list_price || 0),
     0
   );
@@ -35,9 +42,14 @@ export default async function ClosedDealsSection({
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
             Closed Deals
           </h2>
-          <p className="text-muted-foreground">
-            {deals.length} homes sold • {formatPrice(totalVolume)} total volume
-          </p>
+          <div className="flex flex-col sm:flex-row sm:gap-6 text-muted-foreground">
+            <p>
+              <span className="font-semibold text-foreground">{listingDeals.length}</span> homes sold • {formatPrice(listingVolume)}
+            </p>
+            <p>
+              <span className="font-semibold text-foreground">{buyerDeals.length}</span> homes bought • {formatPrice(buyerVolume)}
+            </p>
+          </div>
         </div>
 
         <ClosedDealsMap deals={deals} agentName={agentName} />

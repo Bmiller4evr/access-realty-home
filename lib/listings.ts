@@ -350,7 +350,9 @@ export async function getClosedDeals(agentMlsId: string): Promise<ClosedDeal[]> 
       .not("longitude", "is", null)
       .order("list_price", { ascending: false });
 
-    if (!buyerError && buyerData) {
+    if (buyerError) {
+      console.error("Error fetching buyer deals:", buyerError);
+    } else if (buyerData) {
       buyerDeals = (buyerData as Omit<ClosedDeal, "side">[]).map((deal) => ({
         ...deal,
         side: "buyer" as const,
