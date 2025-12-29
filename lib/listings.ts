@@ -295,14 +295,34 @@ export interface ClosedDeal {
   latitude: number | null;
   longitude: number | null;
   photo_urls: string[] | null;
+  side: "listing" | "buyer";
+}
+
+/**
+ * Look up an agent's member_key hash from their MLS ID
+ */
+async function getAgentMemberKey(agentMlsId: string): Promise<string | null> {
+  const { data, error } = await supabase
+    .from("mls_agents")
+    .select("member_key")
+    .eq("member_mls_id", agentMlsId)
+    .single();
+
+  if (error || !data) {
+    console.error("Error fetching agent member_key:", error);
+    return null;
+  }
+
+  return data.member_key;
 }
 
 /**
  * Fetch all closed deals for an agent (for map display)
- * Uses idx_mls_listings_agent_status index for performance
+ * Includes both listing-side (as seller's agent) and buyer-side deals
  */
 export async function getClosedDeals(agentMlsId: string): Promise<ClosedDeal[]> {
-  const { data, error } = await supabase
+  // Fetch listing-side deals (where agent represented the seller)
+  const listingDealsPromise = supabase
     .from("mls_listings")
     .select(MAP_SELECT_FIELDS)
     .eq("mls_name", MLS_NAME)
@@ -313,10 +333,51 @@ export async function getClosedDeals(agentMlsId: string): Promise<ClosedDeal[]> 
     .not("longitude", "is", null)
     .order("list_price", { ascending: false });
 
-  if (error) {
-    console.error("Error fetching closed deals:", error);
-    return [];
+  // Look up agent's member_key for buyer-side query
+  const memberKey = await getAgentMemberKey(agentMlsId);
+
+  // Fetch buyer-side deals (where agent represented the buyer)
+  let buyerDeals: ClosedDeal[] = [];
+  if (memberKey) {
+    const { data: buyerData, error: buyerError } = await supabase
+      .from("mls_listings")
+      .select(MAP_SELECT_FIELDS)
+      .eq("mls_name", MLS_NAME)
+      .eq("buyer_agent_key", memberKey)
+      .eq("standard_status", "Closed")
+      .neq("property_type", "Residential Lease")
+      .not("latitude", "is", null)
+      .not("longitude", "is", null)
+      .order("list_price", { ascending: false });
+
+    if (!buyerError && buyerData) {
+      buyerDeals = (buyerData as Omit<ClosedDeal, "side">[]).map((deal) => ({
+        ...deal,
+        side: "buyer" as const,
+      }));
+    }
   }
 
-  return (data as ClosedDeal[]) ?? [];
+  const { data: listingData, error: listingError } = await listingDealsPromise;
+
+  if (listingError) {
+    console.error("Error fetching listing deals:", listingError);
+  }
+
+  const listingDeals: ClosedDeal[] = listingData
+    ? (listingData as Omit<ClosedDeal, "side">[]).map((deal) => ({
+        ...deal,
+        side: "listing" as const,
+      }))
+    : [];
+
+  // Combine and dedupe (in case agent was on both sides - rare but possible)
+  const allDeals = [...listingDeals, ...buyerDeals];
+  const uniqueDeals = allDeals.filter(
+    (deal, index, self) =>
+      index === self.findIndex((d) => d.id === deal.id)
+  );
+
+  // Sort by price descending
+  return uniqueDeals.sort((a, b) => (b.list_price || 0) - (a.list_price || 0));
 }

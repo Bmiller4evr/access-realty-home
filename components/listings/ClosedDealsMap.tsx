@@ -62,19 +62,29 @@ export default function ClosedDealsMap({ deals, agentName }: ClosedDealsMapProps
       }
     : defaultCenter;
 
-  // Memoize marker icon - only compute when Google Maps is loaded
+  // Memoize marker icons - only compute when Google Maps is loaded
   // This prevents "google is not defined" errors on mobile
-  const markerIcon = useMemo(() => {
+  const markerIcons = useMemo(() => {
     if (!isLoaded || typeof google === "undefined" || !google.maps?.SymbolPath) {
-      return undefined;
+      return { listing: undefined, buyer: undefined };
     }
     return {
-      path: google.maps.SymbolPath.CIRCLE,
-      scale: 8,
-      fillColor: "#284b70",
-      fillOpacity: 0.9,
-      strokeColor: "#ffffff",
-      strokeWeight: 2,
+      listing: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 8,
+        fillColor: "#284b70", // Navy - listing side (seller's agent)
+        fillOpacity: 0.9,
+        strokeColor: "#ffffff",
+        strokeWeight: 2,
+      },
+      buyer: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 8,
+        fillColor: "#d6b283", // Gold/tan - buyer side (buyer's agent)
+        fillOpacity: 0.9,
+        strokeColor: "#ffffff",
+        strokeWeight: 2,
+      },
     };
   }, [isLoaded]);
 
@@ -132,7 +142,7 @@ export default function ClosedDealsMap({ deals, agentName }: ClosedDealsMapProps
               key={deal.id}
               position={{ lat: deal.latitude, lng: deal.longitude }}
               onClick={() => setSelectedDeal(deal)}
-              icon={markerIcon}
+              icon={markerIcons[deal.side]}
             />
           )
         ))}
@@ -171,9 +181,21 @@ export default function ClosedDealsMap({ deals, agentName }: ClosedDealsMapProps
       </GoogleMap>
 
       <div className="bg-card px-4 py-3 border-t border-border">
-        <p className="text-sm text-muted-foreground">
-          <span className="font-semibold text-foreground">{deals.length}</span> properties sold by {agentName}
-        </p>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className="text-sm text-muted-foreground">
+            <span className="font-semibold text-foreground">{deals.length}</span> closed transactions by {agentName}
+          </p>
+          <div className="flex items-center gap-4 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded-full bg-primary"></span>
+              Seller&apos;s Agent ({deals.filter(d => d.side === "listing").length})
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded-full bg-secondary"></span>
+              Buyer&apos;s Agent ({deals.filter(d => d.side === "buyer").length})
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
