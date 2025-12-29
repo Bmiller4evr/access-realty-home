@@ -7,10 +7,10 @@ import {
   HiOutlineHomeModern,
   HiOutlineShieldCheck,
   HiOutlineClock,
-  HiOutlineDocumentText,
+  HiOutlinePencilSquare,
   HiOutlineCamera,
-  HiOutlineGlobeAlt,
-  HiOutlineLifebuoy
+  HiOutlineRocketLaunch,
+  HiOutlineChatBubbleLeftRight
 } from "react-icons/hi2";
 import Link from "next/link";
 import { TierSelectTrigger } from "@/components/services/TierSelectTrigger";
@@ -209,7 +209,7 @@ export default function DirectListPage() {
             {/* Step 1 - Left */}
             <div className="flex gap-6 items-start">
               <div className="flex-shrink-0 h-12 w-12 rounded-full bg-primary flex items-center justify-center">
-                <HiOutlineDocumentText className="h-6 w-6 text-primary-foreground" />
+                <HiOutlinePencilSquare className="h-6 w-6 text-primary-foreground" />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-foreground mb-1">
@@ -239,7 +239,7 @@ export default function DirectListPage() {
             {/* Step 3 - Left */}
             <div className="flex gap-6 items-start">
               <div className="flex-shrink-0 h-12 w-12 rounded-full bg-primary flex items-center justify-center">
-                <HiOutlineGlobeAlt className="h-6 w-6 text-primary-foreground" />
+                <HiOutlineRocketLaunch className="h-6 w-6 text-primary-foreground" />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-foreground mb-1">
@@ -254,7 +254,7 @@ export default function DirectListPage() {
             {/* Step 4 - Right on desktop */}
             <div className="flex gap-6 items-start md:flex-row-reverse md:text-right">
               <div className="flex-shrink-0 h-12 w-12 rounded-full bg-primary flex items-center justify-center">
-                <HiOutlineLifebuoy className="h-6 w-6 text-primary-foreground" />
+                <HiOutlineChatBubbleLeftRight className="h-6 w-6 text-primary-foreground" />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-foreground mb-1">
