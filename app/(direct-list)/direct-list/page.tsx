@@ -50,62 +50,69 @@ export default function DirectListPage() {
   return (
     <div className="bg-card">
       {/* Hero Section */}
-      <section className="relative min-h-[600px] flex items-center">
-        {/* Background Image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "url('/hero-house-new.jpg')",
-          }}
-        >
-          <div className="absolute inset-0 bg-black/40" />
-        </div>
+      <section className="bg-primary pt-24 md:pt-28 pb-16 md:pb-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            {/* Left Content */}
+            <div className="text-white">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+                <DirectListLogo />
+              </h1>
+              <p
+                className="text-2xl md:text-3xl mb-6 text-secondary"
+                style={{ fontFamily: "'Times New Roman', serif", fontStyle: "italic" }}
+              >
+                The way selling your home should be.
+              </p>
+              <h2 className="text-base md:text-lg mb-8 text-white/90">
+                Everything an agent provides for a fraction of the cost.
+                <br />
+                Because selling smart shouldn&apos;t cost 6%.
+              </h2>
 
-        {/* Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-left text-white">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            <DirectListLogo />
-          </h1>
-          <p
-            className="text-2xl md:text-3xl mb-4 text-secondary font-semibold"
-            style={{ fontFamily: "'Times New Roman', serif", fontStyle: "italic" }}
-          >
-            Exactly what you need, nothing you don&apos;t.
-          </p>
-          <h2 className="text-lg md:text-xl mb-8 max-w-2xl text-white/90 font-bold">
-            Avoid costly agent fees. Get full MLS exposure, backed by experts, and sell smarter.
-          </h2>
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-4 mb-10">
+                <TierSelectTrigger
+                  initialTier="direct-list-plus"
+                  source="direct-list-hero"
+                  className="inline-flex items-center justify-center border-2 border-white text-white px-6 py-3 rounded-md font-semibold hover:bg-white/10 transition-colors"
+                >
+                  Get Started Now
+                </TierSelectTrigger>
+                <Link
+                  href="#pricing"
+                  className="inline-flex items-center justify-center bg-secondary text-secondary-foreground px-6 py-3 rounded-md font-semibold hover:opacity-90 transition-opacity"
+                >
+                  Calculate Your Savings
+                </Link>
+              </div>
 
-          {/* CTAs */}
-          <div className="flex flex-wrap gap-4 mb-12">
-            <TierSelectTrigger
-              initialTier="direct-list-plus"
-              source="direct-list-hero"
-              className="inline-flex items-center justify-center bg-white text-primary px-8 py-3 rounded-md font-semibold hover:bg-white/90 transition-colors"
-            >
-              Get Started Now
-            </TierSelectTrigger>
-            <Link
-              href="#pricing"
-              className="inline-flex items-center justify-center bg-secondary text-secondary-foreground px-8 py-3 rounded-md font-semibold hover:opacity-90 transition-opacity"
-            >
-              Calculate Your Savings
-            </Link>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 max-w-2xl text-secondary">
-            <div>
-              <div className="text-3xl md:text-4xl font-bold">$12,000</div>
-              <div className="text-sm opacity-80">Average Savings</div>
+              {/* Stats */}
+              <div className="flex gap-6 md:gap-8 text-secondary">
+                <div className="border-r border-white/20 pr-6 md:pr-8">
+                  <div className="text-2xl md:text-3xl font-bold">$12,000</div>
+                  <div className="text-xs uppercase tracking-wide opacity-80">Average Savings</div>
+                </div>
+                <div className="border-r border-white/20 pr-6 md:pr-8">
+                  <div className="text-2xl md:text-3xl font-bold">72 hrs</div>
+                  <div className="text-xs uppercase tracking-wide opacity-80">MLS Activation</div>
+                </div>
+                <div>
+                  <div className="text-2xl md:text-3xl font-bold">100%</div>
+                  <div className="text-xs uppercase tracking-wide opacity-80">Your Control</div>
+                </div>
+              </div>
             </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold">72 hrs</div>
-              <div className="text-sm opacity-80">MLS Activation</div>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold">100%</div>
-              <div className="text-sm opacity-80">Your Equity</div>
+
+            {/* Right Image */}
+            <div className="hidden md:block">
+              <div className="border-4 border-secondary rounded-lg overflow-hidden shadow-2xl">
+                <img
+                  src="/hero-house-new.jpg"
+                  alt="Beautiful home for sale"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -372,8 +379,9 @@ export default function DirectListPage() {
               <h3 className="text-xl font-bold text-foreground mb-1">
                 <DirectListLogo />
               </h3>
-              <div className="text-3xl font-bold text-primary mb-1">$2,995</div>
-              <p className="text-sm text-muted-foreground mb-6">$495 upfront</p>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">Starting from</p>
+              <div className="text-3xl font-bold text-primary">$495</div>
+              <p className="text-sm text-muted-foreground mb-6">$2,995 total</p>
 
               <ul className="space-y-3 mb-6">
                 <li className="flex items-center gap-2 text-sm">
@@ -417,8 +425,9 @@ export default function DirectListPage() {
               <h3 className="text-xl font-bold text-foreground mb-1 mt-2">
                 <DirectListLogo /> Plus
               </h3>
-              <div className="text-3xl font-bold text-primary mb-1">$4,495</div>
-              <p className="text-sm text-muted-foreground mb-6">$995 upfront</p>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">Starting from</p>
+              <div className="text-3xl font-bold text-primary">$995</div>
+              <p className="text-sm text-muted-foreground mb-6">$4,495 total</p>
 
               <ul className="space-y-3 mb-6">
                 <li className="flex items-center gap-2 text-sm">
@@ -457,7 +466,8 @@ export default function DirectListPage() {
               <h3 className="text-xl font-bold text-foreground mb-1">
                 <StyledTierName name="Full Service" />
               </h3>
-              <div className="text-3xl font-bold text-primary mb-1">3%</div>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">Pay at closing</p>
+              <div className="text-3xl font-bold text-primary">3%</div>
               <p className="text-sm text-muted-foreground mb-6">No upfront payment</p>
 
               <ul className="space-y-3 mb-6">
