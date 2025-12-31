@@ -2,7 +2,7 @@
 // ABOUTME: Sets up fonts, metadata, and global styles (no Header/Footer - handled by route groups)
 
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro } from "next/font/google";
+import { Be_Vietnam_Pro, Cormorant_Garamond } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
@@ -33,6 +33,13 @@ const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-be-vietnam-pro",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
+});
+
+const cormorantGaramond = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -77,7 +84,7 @@ export default function RootLayout({
           {JSON.stringify(localBusinessSchema)}
         </Script>
       </head>
-      <body className={`${beVietnamPro.variable} antialiased`}>
+      <body className={`${beVietnamPro.variable} ${cormorantGaramond.variable} antialiased`}>
         {children}
       </body>
     </html>

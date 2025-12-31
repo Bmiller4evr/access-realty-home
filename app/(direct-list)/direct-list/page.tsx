@@ -59,8 +59,8 @@ export default function DirectListPage() {
                 <DirectListLogo />
               </h1>
               <p
-                className="text-2xl md:text-3xl mb-6 text-secondary"
-                style={{ fontFamily: "'Times New Roman', serif", fontStyle: "italic" }}
+                className="text-2xl md:text-3xl mb-6 text-secondary italic"
+                style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
               >
                 The way selling your home should be.
               </p>
@@ -217,9 +217,16 @@ export default function DirectListPage() {
                 <p className="text-foreground mb-4">
                   &quot;Traditional agents wanted 6% of our sale price. We used DirectList instead, got the same MLS exposure, and kept most of that money. The listing looked just as professional as our neighbor&apos;s who paid full commission. I don&apos;t know why everyone doesn&apos;t do this.&quot;
                 </p>
-                <div className="border-t border-border pt-4">
-                  <p className="font-semibold text-foreground">Michael T.</p>
-                  <p className="text-sm text-muted-foreground">Plano · Sold in 23 days</p>
+                <div className="border-t border-border pt-4 flex items-center gap-3">
+                  <img
+                    src="https://i.pravatar.cc/80?img=70"
+                    alt="Michael T."
+                    className="h-10 w-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="font-semibold text-foreground">Michael T.</p>
+                    <p className="text-sm text-muted-foreground">Plano · Sold in 23 days</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -230,9 +237,16 @@ export default function DirectListPage() {
                 <p className="text-foreground mb-4">
                   &quot;I&apos;d never sold a house before and was nervous about doing it myself. The app walked me through everything step by step. When I got my first offer and started second-guessing myself, my agent called me back within an hour and walked me through what to look for. Closed in 30 days, no surprises.&quot;
                 </p>
-                <div className="border-t border-border pt-4">
-                  <p className="font-semibold text-foreground">Sarah M.</p>
-                  <p className="text-sm text-muted-foreground">Keller · First-time seller</p>
+                <div className="border-t border-border pt-4 flex items-center gap-3">
+                  <img
+                    src="https://i.pravatar.cc/80?img=47"
+                    alt="Sarah M."
+                    className="h-10 w-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="font-semibold text-foreground">Sarah M.</p>
+                    <p className="text-sm text-muted-foreground">Keller · First-time seller</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -243,9 +257,16 @@ export default function DirectListPage() {
                 <p className="text-foreground mb-4">
                   &quot;This was my third home sale. I know how to price, I know how to show, I know how to negotiate. What I needed was MLS access — not a 3% babysitter. DirectList gave me exactly that. Listed, sold in two weeks, saved $9,000. Perfect for anyone who&apos;s done this before.&quot;
                 </p>
-                <div className="border-t border-border pt-4">
-                  <p className="font-semibold text-foreground">Mark H.</p>
-                  <p className="text-sm text-muted-foreground">Coppell · Third home sale</p>
+                <div className="border-t border-border pt-4 flex items-center gap-3">
+                  <img
+                    src="https://i.pravatar.cc/80?img=52"
+                    alt="Mark H."
+                    className="h-10 w-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="font-semibold text-foreground">Mark H.</p>
+                    <p className="text-sm text-muted-foreground">Coppell · Third home sale</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -256,9 +277,16 @@ export default function DirectListPage() {
                 <p className="text-foreground mb-4">
                   &quot;I was fine until the offer came in $20k under asking. I had no idea how to respond. My DirectList agent reviewed the buyer&apos;s terms, helped me write a counter, and coached me through two rounds of back-and-forth. Closed $8,000 higher than that first offer. That support alone was worth it.&quot;
                 </p>
-                <div className="border-t border-border pt-4">
-                  <p className="font-semibold text-foreground">Angela R.</p>
-                  <p className="text-sm text-muted-foreground">Lewisville · Sold $8k over initial offer</p>
+                <div className="border-t border-border pt-4 flex items-center gap-3">
+                  <img
+                    src="https://i.pravatar.cc/80?img=44"
+                    alt="Angela R."
+                    className="h-10 w-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="font-semibold text-foreground">Angela R.</p>
+                    <p className="text-sm text-muted-foreground">Lewisville · Sold $8k over initial offer</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -269,9 +297,16 @@ export default function DirectListPage() {
                 <p className="text-foreground mb-4">
                   &quot;In 2025 I sold five flips through DirectList — ranged from $285k to $465k. If I&apos;d paid 3% on each of those, that&apos;s $56,000 in listing commissions. Instead I paid under $15,000 total. Same MLS, same Zillow exposure, same buyer pool. I kept $41,000 that would&apos;ve gone to agents. Flat fee beats percentage every time.&quot;
                 </p>
-                <div className="border-t border-border pt-4">
-                  <p className="font-semibold text-foreground">Ryan D.</p>
-                  <p className="text-sm text-muted-foreground">Dallas · Real estate investor</p>
+                <div className="border-t border-border pt-4 flex items-center gap-3">
+                  <img
+                    src="https://i.pravatar.cc/80?img=68"
+                    alt="Ryan D."
+                    className="h-10 w-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="font-semibold text-foreground">Ryan D.</p>
+                    <p className="text-sm text-muted-foreground">Dallas · Real estate investor</p>
+                  </div>
                 </div>
               </div>
             </div>

@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { HiCheck, HiArrowRight, HiClipboardDocumentList, HiXMark } from "react-icons/hi2";
+import Accordion from "@/components/ui/Accordion";
 
 const isThisYou = [
   "Your home is loanable and livable — maybe just a \"clean grandma's house\"",
@@ -79,24 +80,40 @@ const benefits = [
 
 const faqs = [
   {
-    question: "What does \"loanable and livable\" mean?",
-    answer: "The home is in good enough condition that a bank would approve a mortgage for a buyer. No major structural issues, working utilities, and generally move-in ready — even if dated.",
+    question: "What is Uplist?",
+    answer: "Uplist is a way to sell your home without listing it traditionally. You keep ownership while Uplist handles the repairs, marketing, and resale. Once the home sells, you get paid without upfront costs, showings, or agent commissions.",
   },
   {
-    question: "How long does it take to sell?",
-    answer: "Market timing varies, but because we price realistically and expose your home to all buyers on the MLS, most homes sell within typical market timeframes for your area.",
+    question: "Do I still own my home during the process?",
+    answer: "Yes. You remain the owner until the property sells. Uplist simply handles the entire transaction from start to finish.",
   },
   {
-    question: "Do I have to move out?",
-    answer: "Yes, the home needs to be vacant for showings and to present well to buyers.",
+    question: "Do I have to pay for repairs?",
+    answer: "No. Uplist covers the cost of repairs if requested by the buyer or the buyer's lender.",
   },
   {
-    question: "How do you make money?",
-    answer: "We earn a fee at closing from the sale proceeds. You know your net number upfront.",
+    question: "How is this different from listing with a real estate agent?",
+    answer: "With a traditional listing, you pay commissions, handle repairs yourself, and deal with contract negotiations and endless paperwork. Selling with Uplist means no agent commissions, no repairs, and hands-off selling.",
   },
   {
-    question: "What if my home needs some work?",
-    answer: "If your home needs renovation to be marketable, our Price Launch program might be a better fit. We can help you determine which option is right.",
+    question: "How do I get paid?",
+    answer: "You receive your proceeds when the home sells. Everything is outlined clearly before you move forward with no surprises.",
+  },
+  {
+    question: "Is it as fast as an investor cash offer?",
+    answer: "No, investor cash offers typically close within 30 days. It's unlikely that a homestead buyer (non-investor) can close within 30 days. Typically they close in the 45-90 day range depending on market conditions.",
+  },
+  {
+    question: "What if my home doesn't sell?",
+    answer: "If the market changes or the home doesn't sell within the agreed timeframe, you still own the property and can choose your next step.",
+  },
+  {
+    question: "Is this a loan or cash advance?",
+    answer: "No. This is not a loan, not seller financing, and not a cash advance. It's a real estate transaction structured to help you net more without upfront risk.",
+  },
+  {
+    question: "Who is this a good fit for?",
+    answer: "Uplist is ideal if your home needs updates to sell for top dollar, you don't want to deal with repairs or showings, or you want a simpler, no-hassle selling process.",
   },
 ];
 
@@ -253,28 +270,8 @@ export default function UplistPage() {
               Frequently Asked Questions
             </h2>
 
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div
-                  key={index}
-                  className="bg-card border border-border rounded-xl p-6"
-                >
-                  <h3 className="font-bold text-foreground mb-2">{faq.question}</h3>
-                  <p className="text-muted-foreground">
-                    {faq.question === "What if my home needs some work?" ? (
-                      <>
-                        If your home needs renovation to be marketable, our{" "}
-                        <Link href="/solutions/price-launch" className="text-secondary hover:underline">
-                          Price Launch
-                        </Link>{" "}
-                        program might be a better fit. We can help you determine which option is right.
-                      </>
-                    ) : (
-                      faq.answer
-                    )}
-                  </p>
-                </div>
-              ))}
+            <div className="bg-card border border-border rounded-xl px-6">
+              <Accordion items={faqs} />
             </div>
           </div>
         </div>

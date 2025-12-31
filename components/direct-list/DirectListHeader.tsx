@@ -19,16 +19,16 @@ export function DirectListHeader() {
               priority
             />
           </Link>
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="flex items-center gap-3 md:gap-8">
             <Link
               href="/services"
-              className="text-foreground hover:text-secondary transition-colors"
+              className="text-sm md:text-base text-foreground hover:text-secondary transition-colors"
             >
               Compare Plans
             </Link>
             <a
               href="https://app.access.realty"
-              className="bg-primary text-primary-foreground px-6 py-2 rounded-md font-semibold hover:bg-primary-dark transition-colors"
+              className="bg-primary text-primary-foreground px-4 md:px-6 py-2 rounded-md text-sm md:text-base font-semibold hover:bg-primary-dark transition-colors"
             >
               Sign In
             </a>

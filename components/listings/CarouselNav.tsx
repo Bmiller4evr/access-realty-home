@@ -74,14 +74,18 @@ export default function CarouselNav({ children }: CarouselNavProps) {
       {/* Scroll container */}
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 md:mx-0 md:px-0"
+        className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 md:mx-0"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
           WebkitOverflowScrolling: "touch",
         }}
       >
+        {/* Mobile left spacer - creates padding that doesn't scroll away */}
+        <div className="shrink-0 w-4 md:hidden" aria-hidden="true" />
         {children}
+        {/* Mobile right spacer */}
+        <div className="shrink-0 w-4 md:hidden" aria-hidden="true" />
       </div>
     </div>
   );
