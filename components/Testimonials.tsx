@@ -1,21 +1,23 @@
 // ABOUTME: Testimonials section showing customer success stories
 // ABOUTME: Displays avatars with brief success highlights
 
+import Image from "next/image";
+
 const testimonials = [
   {
     name: "Charles",
     text: "Charles saved $12,255 on his listing",
-    initials: "CS",
+    image: "/testimonials/large-charles-avatar.jpg",
   },
   {
     name: "The Kasingers",
     text: "The Kasinger's closed in 2 weeks",
-    initials: "TK",
+    image: "/testimonials/large-kasingers-avatar.jpg",
   },
   {
     name: "Katie",
     text: "Katie Sold for the Most",
-    initials: "KS",
+    image: "/testimonials/large-katie-avatar.jpg",
   },
 ];
 
@@ -30,10 +32,14 @@ const Testimonials = () => {
               className="flex flex-col items-center gap-4 animate-fade-in"
               style={{ animationDelay: `${index * 0.2}s` }}
             >
-              <div className="h-24 w-24 rounded-full border-4 border-secondary shadow-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground text-2xl font-bold">
-                  {testimonial.initials}
-                </span>
+              <div className="h-24 w-24 rounded-full border-4 border-secondary shadow-lg overflow-hidden">
+                <Image
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  width={96}
+                  height={96}
+                  className="object-cover w-full h-full"
+                />
               </div>
               <p className="text-center text-foreground font-semibold max-w-xs">
                 {testimonial.text}
