@@ -466,8 +466,15 @@ export function TierSelectionModal({
                   <h3 className="font-semibold text-sm mb-1">
                     <TierName name={tier.name} />
                   </h3>
-                  <div className="text-lg font-bold text-primary">{tier.totalPrice}</div>
-                  <div className="text-xs text-muted-foreground">{tier.upfrontPrice}</div>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-wide">
+                    {tier.id === "full-service" ? "Pay at closing" : "Starting from"}
+                  </div>
+                  <div className="text-xl font-bold text-primary">
+                    {tier.id === "full-service" ? tier.totalPrice : tier.upfrontPrice.replace(" upfront", "")}
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    {tier.id === "full-service" ? "No upfront payment" : `${tier.totalPrice} total`}
+                  </div>
                 </div>
               </div>
             ))}
@@ -562,8 +569,15 @@ export function TierSelectionModal({
                       )}
                     </div>
                     <div className="text-right">
-                      <div className="text-xl font-bold text-primary">{tier.totalPrice}</div>
-                      <div className="text-xs text-muted-foreground">{tier.upfrontPrice}</div>
+                      <div className="text-[10px] text-muted-foreground uppercase tracking-wide">
+                        {tier.id === "full-service" ? "Pay at closing" : "Starting from"}
+                      </div>
+                      <div className="text-2xl font-bold text-primary">
+                        {tier.id === "full-service" ? tier.totalPrice : tier.upfrontPrice.replace(" upfront", "")}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {tier.id === "full-service" ? "No upfront payment" : `${tier.totalPrice} total`}
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -267,12 +267,15 @@ export default function Services() {
                   <h3 className="font-semibold text-base mb-1">
                     <StyledTierName name={tier.name} />
                   </h3>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-wide">
+                    {tier.upfrontPrice ? "Starting from" : "Pay at closing"}
+                  </div>
                   <div className="text-xl font-bold text-primary">
-                    {tier.totalPrice}
+                    {tier.upfrontPrice ? `$${tier.upfrontPrice}` : tier.totalPrice}
                   </div>
                   <div className="text-xs text-muted-foreground">
                     {tier.upfrontPrice
-                      ? `${tier.upfrontPrice} upfront`
+                      ? `${tier.totalPrice} total`
                       : "No upfront payment"}
                   </div>
                 </div>
@@ -395,12 +398,15 @@ export default function Services() {
                       )}
                     </div>
                     <div className="text-right">
+                      <div className="text-[10px] text-muted-foreground uppercase tracking-wide">
+                        {tier.upfrontPrice ? "Starting from" : "Pay at closing"}
+                      </div>
                       <div className="text-2xl font-bold text-primary">
-                        {tier.totalPrice}
+                        {tier.upfrontPrice ? `$${tier.upfrontPrice}` : tier.totalPrice}
                       </div>
                       <div className="text-xs text-muted-foreground">
                         {tier.upfrontPrice
-                          ? `${tier.upfrontPrice} upfront`
+                          ? `${tier.totalPrice} total`
                           : "No upfront"}
                       </div>
                     </div>
